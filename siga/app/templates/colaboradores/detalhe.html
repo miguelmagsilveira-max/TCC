@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block title %}Stock Flow — {{ colaborador.nome }}{% endblock %}
+{% block page_title %}{{ colaborador.nome }}{% endblock %}
+
+{% block topbar_actions %}
+{% if usuario.nivel == 'admin' %}
+<a href="/colaboradores/{{ colaborador.id }}/editar"
+   class="px-4 py-2 border border-slate-300 hover:bg-slate-50 text-slate-700 text-sm font-medium rounded-lg transition-colors">
+  Editar
+</a>
+{% if colaborador.status == 'ativo' %}
+<form method="post" action="/colaboradores/{{ colaborador.id }}/desligar"
+      onsubmit="return confirm('Desligar {{ colaborador.nome }}? Os ativos vinculados permanecerão registrados.')">
+  <button type="submit"
+          class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-lg transition-colors">
+    Desligar
+  </button>
+</form>
+{% else %}
+<form method="post" action="/colaboradores/{{ colaborador.id }}/reativar">
+  <button type="submit"
+          class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded-lg transition-colors">
+    Reativar
+  </button>
+</form>
+{% endif %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+
+  {# Info card #}
+  <div class="lg:col-span-1">
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+      <div class="flex items-center gap-4 mb-5">
+        <div class="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 text-xl font-bold flex-shrink-0">
+          {{ colaborador.nome[0]|upper }}
+        </div>
+        <div>
+          <h3 class="font-semibold text-slate-800">{{ colaborador.nome }}</h3>
+          {% if colaborador.status == 'ativo' %}
+          <span class="inline-flex mt-1 px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">Ativo</span>
+          {% else %}
+          <span class="inline-flex mt-1 px-2 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-600">Desligado</span>
+          {% endif %}
+        </div>
+      </div>
+
+      <dl class="space-y-3 text-sm">
+        <div>
+          <dt class="text-xs font-medium text-slate-400 uppercase tracking-wide">E-mail</dt>
+          <dd class="mt-0.5 text-slate-700">{{ colaborador.email or '—' }}</dd>
+        </div>
+        <div>
+          <dt class="text-xs font-medium text-slate-400 uppercase tracking-wide">Cargo</dt>
+          <dd class="mt-0.5 text-slate-700">{{ colaborador.cargo or '—' }}</dd>
+        </div>
+        <div>
+          <dt class="text-xs font-medium text-slate-400 uppercase tracking-wide">Departamento</dt>
+          <dd class="mt-0.5 text-slate-700">{{ colaborador.departamento or '—' }}</dd>
+        </div>
+        <div>
+          <dt class="text-xs font-medium text-slate-400 uppercase tracking-wide">Cadastrado em</dt>
+          <dd class="mt-0.5 text-slate-700">{{ colaborador.criado_em | datahora }}</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+
+  {# Assets #}
+  <div class="lg:col-span-2">
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm">
+      <div class="px-5 py-4 border-b border-slate-100">
+        <h3 class="text-sm font-semibold text-slate-700">
+          Ativos Vinculados
+          <span class="ml-1.5 px-1.5 py-0.5 bg-slate-100 text-slate-600 text-xs rounded-full">{{ ativos|length }}</span>
+        </h3>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-slate-50 border-b border-slate-100">
+              <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Código</th>
+              <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Nome</th>
+              <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Tipo</th>
+              <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Situação</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            {% for a in ativos %}
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3">
+                <a href="/ativos/{{ a.id }}" class="text-blue-600 hover:text-blue-700 font-medium">{{ a.codigo }}</a>
+              </td>
+              <td class="px-4 py-3 text-slate-700">{{ a.nome }}</td>
+              <td class="px-4 py-3 text-slate-600">{{ a.tipo or '—' }}</td>
+              <td class="px-4 py-3">
+                {% if a.situacao == 'Em estoque' %}
+                <span class="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">Em estoque</span>
+                {% elif a.situacao == 'Em uso' %}
+                <span class="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-700">Em uso</span>
+                {% elif a.situacao == 'Manutenção' %}
+                <span class="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">Manutenção</span>
+                {% else %}
+                <span class="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-600">{{ a.situacao }}</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="4" class="px-4 py-10 text-center text-slate-400 text-sm">
+                Nenhum ativo vinculado a este colaborador.
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

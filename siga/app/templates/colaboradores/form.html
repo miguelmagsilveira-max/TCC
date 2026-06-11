@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Stock Flow — {{ 'Editar' if colaborador else 'Novo' }} Colaborador{% endblock %}
+{% block page_title %}{{ 'Editar Colaborador' if colaborador else 'Novo Colaborador' }}{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl">
+  <div class="rounded-xl border shadow-sm" style="background-color: var(--bg-card); border-color: var(--border);">
+    <div class="px-6 py-4 border-b" style="border-color: var(--border);">
+      <h3 class="text-sm font-semibold text-slate-700">Dados do Colaborador</h3>
+    </div>
+    <form method="post"
+          action="{{ '/colaboradores/' ~ colaborador.id ~ '/editar' if colaborador else '/colaboradores/novo' }}"
+          class="px-6 py-5 space-y-4">
+
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1.5">
+          Nome <span class="text-red-500">*</span>
+        </label>
+        <input type="text" name="nome" required
+               value="{{ colaborador.nome if colaborador else '' }}"
+               placeholder="Nome completo"
+               class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1.5">E-mail</label>
+        <input type="email" name="email"
+               value="{{ colaborador.email if colaborador and colaborador.email else '' }}"
+               placeholder="email@empresa.com"
+               class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1.5">Cargo</label>
+        <div data-smart-select
+             data-contexto="cargo"
+             data-name="cargo"
+             data-placeholder="Ex.: Desenvolvedor Backend"
+             data-valor="{{ colaborador.cargo if colaborador and colaborador.cargo else '' }}"></div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1.5">Departamento</label>
+        <div data-smart-select
+             data-contexto="departamento"
+             data-name="departamento"
+             data-placeholder="Ex.: TI, Marketing, RH"
+             data-valor="{{ colaborador.departamento if colaborador and colaborador.departamento else '' }}"></div>
+      </div>
+
+      <div class="flex gap-3 pt-2">
+        <button type="submit"
+                class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors">
+          Salvar
+        </button>
+        <a href="{{ '/colaboradores/' ~ colaborador.id if colaborador else '/colaboradores' }}"
+           class="px-5 py-2.5 border border-slate-300 hover:bg-slate-50 text-slate-700 text-sm font-medium rounded-lg transition-colors">
+          Cancelar
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
