@@ -12,7 +12,7 @@ TCC — Curso Técnico em Desenvolvimento de Sistemas
 
 ### 1. Clonar e entrar na pasta
 ```bash
-cd siga
+cd stockflow
 ```
 
 ### 2. Criar e ativar ambiente virtual
