@@ -1,6 +1,26 @@
+# Ambientes virtuais
 venv/
+.venv/
+env/
+
+# Cache e artefatos Python
 __pycache__/
 *.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+
+# Variáveis de ambiente e segredos
 .env
+
+# Bancos de dados locais
 *.db
-/tmp
+*.sqlite3
+
+# Editores e SO
+.vscode/
+.idea/
+.DS_Store
+
+# Temporários
+/tmp/

@@ -3,14 +3,10 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 
 from app.auth import get_usuario_atual, requer_admin
 from app.database import execute_one, execute_query, execute_write
+from app.helpers import contar_alertas
 from app.templates_config import templates
 
 router = APIRouter(prefix="/ativos", tags=["Ativos"])
-
-
-def _alertas_count() -> int:
-    row = execute_one("SELECT COUNT(*) as c FROM notificacoes WHERE lida = 0")
-    return row["c"] if row else 0
 
 
 def _proximo_codigo() -> str:
@@ -63,7 +59,7 @@ def listar(
         "request": request, "usuario": usuario,
         "ativos": ativos, "tipos": tipos,
         "busca": busca, "tipo_sel": tipo, "situacao_sel": situacao,
-        "alertas_count": _alertas_count(),
+        "alertas_count": contar_alertas(),
     })
 
 
@@ -74,7 +70,7 @@ def form_novo(request: Request, admin: dict = Depends(requer_admin)):
     return templates.TemplateResponse("ativos/form.html", {
         "request": request, "usuario": admin,
         "ativo": None, "tipos": tipos, "colaboradores": colaboradores,
-        "alertas_count": _alertas_count(),
+        "alertas_count": contar_alertas(),
     })
 
 
@@ -146,7 +142,7 @@ def detalhe(request: Request, ativo_id: int, usuario: dict = Depends(get_usuario
     return templates.TemplateResponse("ativos/detalhe.html", {
         "request": request, "usuario": usuario,
         "ativo": ativo, "historico": historico, "colaboradores": colaboradores,
-        "alertas_count": _alertas_count(),
+        "alertas_count": contar_alertas(),
     })
 
 
@@ -160,7 +156,7 @@ def form_editar(request: Request, ativo_id: int, admin: dict = Depends(requer_ad
     return templates.TemplateResponse("ativos/form.html", {
         "request": request, "usuario": admin,
         "ativo": ativo, "tipos": tipos, "colaboradores": colaboradores,
-        "alertas_count": _alertas_count(),
+        "alertas_count": contar_alertas(),
     })
 
 

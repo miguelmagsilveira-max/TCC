@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Form, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 
-from app.auth import COOKIE_NAME, criar_token, get_usuario_atual, verificar_senha
+from app.auth import COOKIE_NAME, criar_token, verificar_senha
 from app.database import execute_one, execute_write
 from app.templates_config import templates
 

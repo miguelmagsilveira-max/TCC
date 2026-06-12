@@ -15,7 +15,7 @@ load_dotenv()
 SECRET_KEY     = os.getenv("JWT_SECRET", "chave_insegura_troque_isso")
 EXPIRE_HOURS   = int(os.getenv("JWT_EXPIRE_HOURS", 24))
 ALGORITHM      = "HS256"
-COOKIE_NAME    = "siga_token"
+COOKIE_NAME    = "stockflow_token"
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

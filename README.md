@@ -3,16 +3,18 @@
 TCC — Curso Técnico em Desenvolvimento de Sistemas
 
 ## Tecnologias
-- Python 3.11+ com FastAPI
+- Python 3.12 com FastAPI
 - MySQL 8.0+
 - Jinja2 (templates HTML)
 - Tailwind CSS (via CDN)
+- Autenticação JWT em cookie HTTP-only
 
 ## Configuração e execução
 
 ### 1. Clonar e entrar na pasta
 ```bash
-cd stockflow
+git clone https://github.com/miguelmagsilveira-max/TCC.git
+cd TCC
 ```
 
 ### 2. Criar e ativar ambiente virtual
@@ -61,7 +63,13 @@ Configure as variáveis de ambiente `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, 
 - `app/main.py` — ponto de entrada da aplicação
 - `app/database.py` — conexão e queries MySQL
 - `app/auth.py` — autenticação JWT
+- `app/helpers.py` — funções auxiliares compartilhadas
 - `app/routers/` — rotas organizadas por domínio
 - `app/templates/` — páginas HTML (Jinja2)
 - `app/static/` — arquivos estáticos (CSS, JS)
 - `init_db.sql` — schema do banco + dados iniciais
+- `docs/` — documentação técnica do projeto (ver [docs/README.md](docs/README.md))
+
+## Documentação
+
+A documentação técnica completa (requisitos, arquitetura, banco de dados, casos de uso, manual do usuário e testes) está disponível na pasta [`docs/`](docs/README.md).

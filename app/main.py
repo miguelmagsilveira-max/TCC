@@ -38,6 +38,11 @@ def raiz():
     return RedirectResponse(url="/dashboard")
 
 
+@app.get("/health", include_in_schema=False)
+def health():
+    return {"status": "ok"}
+
+
 @app.exception_handler(403)
 async def handler_403(request: Request, exc):
     from app.templates_config import templates

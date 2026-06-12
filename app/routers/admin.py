@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Body, Depends, Form, HTTPException, Request
+from fastapi import APIRouter, Depends, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from pydantic import BaseModel
 
 from app.auth import get_usuario_atual, hash_senha, requer_admin
 from app.database import execute_one, execute_query, execute_write
+from app.helpers import contar_alertas
 from app.templates_config import templates
 
 router = APIRouter(prefix="/admin", tags=["Administração"])
@@ -12,11 +13,6 @@ api_router = APIRouter(prefix="/api", tags=["API"])
 
 class OpcaoCreate(BaseModel):
     valor: str
-
-
-def _alertas_count() -> int:
-    row = execute_one("SELECT COUNT(*) as c FROM notificacoes WHERE lida = 0")
-    return row["c"] if row else 0
 
 
 # ── Usuários ──────────────────────────────────────────────────────────────────
@@ -28,7 +24,7 @@ def listar_usuarios(request: Request, admin: dict = Depends(requer_admin)):
     )
     return templates.TemplateResponse("admin/usuarios.html", {
         "request": request, "usuario": admin, "usuarios": usuarios,
-        "alertas_count": _alertas_count(),
+        "alertas_count": contar_alertas(),
     })
 
 
@@ -36,7 +32,7 @@ def listar_usuarios(request: Request, admin: dict = Depends(requer_admin)):
 def form_novo_usuario(request: Request, admin: dict = Depends(requer_admin)):
     return templates.TemplateResponse("admin/usuario_form.html", {
         "request": request, "usuario": admin, "editando": None,
-        "alertas_count": _alertas_count(),
+        "alertas_count": contar_alertas(),
     })
 
 
@@ -67,7 +63,7 @@ def form_editar_usuario(request: Request, user_id: int, admin: dict = Depends(re
         return RedirectResponse(url="/admin/usuarios", status_code=302)
     return templates.TemplateResponse("admin/usuario_form.html", {
         "request": request, "usuario": admin, "editando": editando,
-        "alertas_count": _alertas_count(),
+        "alertas_count": contar_alertas(),
     })
 
 

@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse
 
 from app.auth import get_usuario_atual
 from app.database import execute_one, execute_query
+from app.helpers import contar_alertas
 from app.templates_config import templates
 
 router = APIRouter(tags=["Dashboard"])
@@ -21,7 +22,7 @@ def dashboard(request: Request, usuario: dict = Depends(get_usuario_atual)):
     valor_row = execute_one("SELECT COALESCE(SUM(preco), 0) as v FROM ativos WHERE ativo = 1")
     valor_total = float(valor_row["v"]) if valor_row else 0.0
 
-    alertas_count = execute_one("SELECT COUNT(*) as c FROM notificacoes WHERE lida = 0")["c"]
+    alertas_count = contar_alertas()
 
     # Últimas 8 movimentações
     ultimas_movimentacoes = execute_query("""

@@ -10,15 +10,11 @@ from reportlab.lib.units import cm
 from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
 from app.auth import get_usuario_atual
-from app.database import execute_one, execute_query
+from app.database import execute_query
+from app.helpers import contar_alertas
 from app.templates_config import templates
 
 router = APIRouter(prefix="/relatorios", tags=["Relatórios"])
-
-
-def _alertas_count() -> int:
-    row = execute_one("SELECT COUNT(*) as c FROM notificacoes WHERE lida = 0")
-    return row["c"] if row else 0
 
 
 def _calcular_curva_abc() -> list[dict]:
@@ -106,7 +102,7 @@ def pagina_relatorios(
         "tipo_sel": tipo, "situacao_sel": situacao,
         "resumo_por_tipo": resumo_por_tipo,
         "resumo_por_situacao": resumo_por_situacao,
-        "alertas_count": _alertas_count(),
+        "alertas_count": contar_alertas(),
     })
 
 
@@ -160,7 +156,7 @@ def exportar_pdf(usuario: dict = Depends(get_usuario_atual)):
 
     doc.build(elements)
     buffer.seek(0)
-    filename = f"siga_ativos_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf"
+    filename = f"stockflow_ativos_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf"
     return StreamingResponse(
         buffer,
         media_type="application/pdf",

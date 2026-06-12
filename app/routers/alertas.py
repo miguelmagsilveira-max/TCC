@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 
 from app.auth import get_usuario_atual
-from app.database import execute_query, execute_write, execute_one
+from app.database import execute_query, execute_write
 from app.templates_config import templates
 
 router = APIRouter(prefix="/alertas", tags=["Alertas"])

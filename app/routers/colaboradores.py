@@ -3,14 +3,10 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 
 from app.auth import get_usuario_atual, requer_admin
 from app.database import execute_one, execute_query, execute_write
+from app.helpers import contar_alertas
 from app.templates_config import templates
 
 router = APIRouter(prefix="/colaboradores", tags=["Colaboradores"])
-
-
-def _alertas_count() -> int:
-    row = execute_one("SELECT COUNT(*) as c FROM notificacoes WHERE lida = 0")
-    return row["c"] if row else 0
 
 
 @router.get("", response_class=HTMLResponse)
@@ -26,7 +22,7 @@ def listar(request: Request, busca: str = "", usuario: dict = Depends(get_usuari
     return templates.TemplateResponse("colaboradores/index.html", {
         "request": request, "usuario": usuario,
         "colaboradores": colaboradores, "busca": busca,
-        "alertas_count": _alertas_count(),
+        "alertas_count": contar_alertas(),
     })
 
 
@@ -34,7 +30,7 @@ def listar(request: Request, busca: str = "", usuario: dict = Depends(get_usuari
 def form_novo(request: Request, admin: dict = Depends(requer_admin)):
     return templates.TemplateResponse("colaboradores/form.html", {
         "request": request, "usuario": admin, "colaborador": None,
-        "alertas_count": _alertas_count(),
+        "alertas_count": contar_alertas(),
     })
 
 
@@ -67,7 +63,7 @@ def detalhe(request: Request, colaborador_id: int, usuario: dict = Depends(get_u
     return templates.TemplateResponse("colaboradores/detalhe.html", {
         "request": request, "usuario": usuario,
         "colaborador": colaborador, "ativos": ativos_vinculados,
-        "alertas_count": _alertas_count(),
+        "alertas_count": contar_alertas(),
     })
 
 
@@ -78,7 +74,7 @@ def form_editar(request: Request, colaborador_id: int, admin: dict = Depends(req
         return RedirectResponse(url="/colaboradores", status_code=302)
     return templates.TemplateResponse("colaboradores/form.html", {
         "request": request, "usuario": admin, "colaborador": colaborador,
-        "alertas_count": _alertas_count(),
+        "alertas_count": contar_alertas(),
     })
 
 
