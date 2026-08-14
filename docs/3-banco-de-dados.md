@@ -8,6 +8,8 @@ Este documento descreve a modelagem do banco de dados relacional do sistema Stoc
 
 ## 3.1. Diagrama Entidade-Relacionamento (ER)
 
+**Figura 1 — Diagrama entidade-relacionamento do sistema Stock Flow**
+
 ```mermaid
 erDiagram
     usuarios ||--o{ ativos : "cadastra"
@@ -95,6 +97,8 @@ erDiagram
     }
 ```
 
+*Fonte: elaborado pelos autores (2026).*
+
 ---
 
 ## 3.2. Descrição das tabelas
@@ -102,6 +106,8 @@ erDiagram
 ### 3.2.1. `usuarios`
 
 Armazena os usuários do sistema, responsáveis pelo acesso e operação.
+
+**Quadro 1 — Estrutura da tabela usuarios**
 
 | Campo | Tipo | Restrições | Descrição |
 |-------|------|------------|-----------|
@@ -114,9 +120,13 @@ Armazena os usuários do sistema, responsáveis pelo acesso e operação.
 | criado_em | DATETIME | NOT NULL, DEFAULT NOW() | Data de criação do registro. |
 | ultimo_acesso | DATETIME | — | Data e hora do último acesso. |
 
+*Fonte: elaborado pelos autores (2026).*
+
 ### 3.2.2. `colaboradores`
 
 Armazena os funcionários da empresa, aos quais os ativos podem ser vinculados.
+
+**Quadro 2 — Estrutura da tabela colaboradores**
 
 | Campo | Tipo | Restrições | Descrição |
 |-------|------|------------|-----------|
@@ -128,9 +138,13 @@ Armazena os funcionários da empresa, aos quais os ativos podem ser vinculados.
 | status | ENUM('ativo','desligado') | NOT NULL, DEFAULT 'ativo' | Situação do colaborador. |
 | criado_em | DATETIME | NOT NULL, DEFAULT NOW() | Data de criação do registro. |
 
+*Fonte: elaborado pelos autores (2026).*
+
 ### 3.2.3. `tipos_ativo`
 
 Define os tipos de ativo e o estoque mínimo configurável de cada um.
+
+**Quadro 3 — Estrutura da tabela tipos_ativo**
 
 | Campo | Tipo | Restrições | Descrição |
 |-------|------|------------|-----------|
@@ -138,9 +152,13 @@ Define os tipos de ativo e o estoque mínimo configurável de cada um.
 | nome | VARCHAR(100) | UNIQUE, NOT NULL | Nome do tipo de ativo. |
 | estoque_minimo | INT | NOT NULL, DEFAULT 0 | Quantidade mínima em estoque antes de gerar alerta. |
 
+*Fonte: elaborado pelos autores (2026).*
+
 ### 3.2.4. `ativos`
 
 Tabela central do sistema, armazena os ativos de TI.
+
+**Quadro 4 — Estrutura da tabela ativos**
 
 | Campo | Tipo | Restrições | Descrição |
 |-------|------|------------|-----------|
@@ -165,9 +183,13 @@ Tabela central do sistema, armazena os ativos de TI.
 | criado_em | DATETIME | NOT NULL, DEFAULT NOW() | Data de criação do registro. |
 | criado_por | INT | FK → usuarios(id), ON DELETE SET NULL | Usuário que cadastrou o ativo. |
 
+*Fonte: elaborado pelos autores (2026).*
+
 ### 3.2.5. `historico_ativos`
 
 Registra todas as movimentações sofridas por um ativo.
+
+**Quadro 5 — Estrutura da tabela historico_ativos**
 
 | Campo | Tipo | Restrições | Descrição |
 |-------|------|------------|-----------|
@@ -180,9 +202,13 @@ Registra todas as movimentações sofridas por um ativo.
 | realizado_por | INT | FK → usuarios(id), ON DELETE SET NULL | Usuário responsável pela ação. |
 | realizado_em | DATETIME | NOT NULL, DEFAULT NOW() | Data e hora da movimentação. |
 
+*Fonte: elaborado pelos autores (2026).*
+
 ### 3.2.6. `notificacoes`
 
 Armazena notificações e alertas gerados pelo sistema.
+
+**Quadro 6 — Estrutura da tabela notificacoes**
 
 | Campo | Tipo | Restrições | Descrição |
 |-------|------|------------|-----------|
@@ -193,9 +219,13 @@ Armazena notificações e alertas gerados pelo sistema.
 | lida | TINYINT(1) | NOT NULL, DEFAULT 0 | Indica se a notificação foi lida. |
 | criada_em | DATETIME | NOT NULL, DEFAULT NOW() | Data de criação. |
 
+*Fonte: elaborado pelos autores (2026).*
+
 ### 3.2.7. `opcoes_select`
 
 Suporta o componente SmartSelect, armazenando as opções dinâmicas dos campos de seleção.
+
+**Quadro 7 — Estrutura da tabela opcoes_select**
 
 | Campo | Tipo | Restrições | Descrição |
 |-------|------|------------|-----------|
@@ -204,6 +234,8 @@ Suporta o componente SmartSelect, armazenando as opções dinâmicas dos campos 
 | valor | VARCHAR(100) | NOT NULL, UNIQUE(contexto, valor) | Valor da opção. |
 | criado_por | INT | — | Usuário que adicionou a opção. |
 | criado_em | DATETIME | NOT NULL, DEFAULT NOW() | Data de criação. |
+
+*Fonte: elaborado pelos autores (2026).*
 
 ---
 
@@ -218,6 +250,8 @@ Suporta o componente SmartSelect, armazenando as opções dinâmicas dos campos 
 ---
 
 ## 3.4. Dicionário de dados consolidado
+
+**Quadro 8 — Dicionário de dados consolidado**
 
 | Tabela | Campo | Tipo | Tamanho | Obrigatório | Descrição |
 |--------|-------|------|---------|-------------|-----------|
@@ -279,6 +313,8 @@ Suporta o componente SmartSelect, armazenando as opções dinâmicas dos campos 
 | opcoes_select | criado_por | INT | — | Não | Usuário criador |
 | opcoes_select | criado_em | DATETIME | — | Sim | Data de criação |
 
+*Fonte: elaborado pelos autores (2026).*
+
 ---
 
 ## 3.5. Decisões de modelagem
@@ -289,3 +325,15 @@ Suporta o componente SmartSelect, armazenando as opções dinâmicas dos campos 
 - **Anulação de vínculos:** as chaves estrangeiras `id_colaborador` e `criado_por` adotam `ON DELETE SET NULL`, preservando os ativos mesmo após a exclusão de colaboradores ou usuários.
 - **Opções dinâmicas (SmartSelect):** a tabela `opcoes_select` centraliza as opções dos campos de seleção, com restrição de unicidade no par `(contexto, valor)`, permitindo a adição e remoção de opções sem alteração de esquema.
 - **Senhas protegidas:** o campo `senha_hash` armazena exclusivamente o hash bcrypt, nunca a senha em texto puro.
+
+---
+
+## 3.6. Referências
+
+ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. **NBR 14724**: informação e documentação: trabalhos acadêmicos: apresentação. Rio de Janeiro: ABNT, 2011.
+
+ELMASRI, Ramez; NAVATHE, Shamkant B. **Sistemas de banco de dados**. 7. ed. São Paulo: Pearson, 2018.
+
+HEUSER, Carlos Alberto. **Projeto de banco de dados**. 6. ed. Porto Alegre: Bookman, 2009.
+
+ORACLE. **MySQL 8.0 reference manual**. [S. l.], 2024. Disponível em: https://dev.mysql.com/doc/refman/8.0/en/. Acesso em: 14 ago. 2026.

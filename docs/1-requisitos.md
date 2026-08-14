@@ -10,6 +10,8 @@ Este documento especifica os requisitos funcionais, não funcionais e as regras 
 
 Os requisitos funcionais descrevem as funcionalidades que o sistema deve oferecer aos seus usuários.
 
+**Quadro 1 — Requisitos funcionais do sistema Stock Flow**
+
 | Código | Requisito |
 |--------|-----------|
 | RF01 | O sistema deve permitir login com e-mail e senha. |
@@ -36,11 +38,15 @@ Os requisitos funcionais descrevem as funcionalidades que o sistema deve oferece
 | RF22 | O sistema deve permitir a edição dos dados cadastrais de um ativo. |
 | RF23 | O sistema deve apresentar páginas de erro personalizadas para acessos não autorizados (403) e recursos inexistentes (404). |
 
+*Fonte: elaborado pelos autores (2026).*
+
 ---
 
 ## 1.2. Requisitos Não Funcionais (RNF)
 
 Os requisitos não funcionais descrevem atributos de qualidade e restrições técnicas do sistema.
+
+**Quadro 2 — Requisitos não funcionais do sistema Stock Flow**
 
 | Código | Requisito |
 |--------|-----------|
@@ -57,11 +63,15 @@ Os requisitos não funcionais descrevem atributos de qualidade e restrições t�
 | RNF11 | O token de autenticação deve ser armazenado em cookie HTTP-only, mitigando ataques de roubo de sessão via JavaScript. |
 | RNF12 | A interface deve seguir um padrão visual consistente em todas as telas. |
 
+*Fonte: elaborado pelos autores (2026).*
+
 ---
 
 ## 1.3. Regras de Negócio (RN)
 
 As regras de negócio definem as restrições e políticas que governam o comportamento do sistema.
+
+**Quadro 3 — Regras de negócio do sistema Stock Flow**
 
 | Código | Regra |
 |--------|-------|
@@ -77,3 +87,15 @@ As regras de negócio definem as restrições e políticas que governam o compor
 | RN10 | O operador pode visualizar ativos e colaboradores, mas não pode realizar alterações. |
 | RN11 | O alerta de estoque baixo é disparado quando a quantidade de ativos em estoque de um tipo for inferior ao estoque mínimo configurado. |
 | RN12 | O alerta de garantia é disparado para ativos cuja data de garantia esteja dentro dos próximos 30 dias. |
+
+*Fonte: elaborado pelos autores (2026).*
+
+---
+
+## 1.4. Referências
+
+ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. **NBR 14724**: informação e documentação: trabalhos acadêmicos: apresentação. Rio de Janeiro: ABNT, 2011.
+
+PRESSMAN, Roger S.; MAXIM, Bruce R. **Engenharia de software**: uma abordagem profissional. 8. ed. Porto Alegre: AMGH, 2016.
+
+SOMMERVILLE, Ian. **Engenharia de software**. 10. ed. São Paulo: Pearson, 2019.

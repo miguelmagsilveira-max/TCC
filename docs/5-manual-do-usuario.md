@@ -32,6 +32,8 @@ Em caso de credenciais inválidas, o sistema exibe uma mensagem de erro e manté
 
 Após o login, o usuário é direcionado ao **dashboard**, que apresenta indicadores em tempo real. Os principais indicadores são:
 
+**Quadro 1 — Indicadores do dashboard**
+
 | Indicador | Significado |
 |-----------|-------------|
 | Total de ativos | Quantidade de ativos cadastrados no inventário ativo. |
@@ -40,6 +42,8 @@ Após o login, o usuário é direcionado ao **dashboard**, que apresenta indicad
 | Ativos em manutenção | Ativos enviados para reparo. |
 | Alertas de estoque | Tipos de ativo com quantidade abaixo do mínimo. |
 | Garantias a vencer | Ativos com garantia expirando nos próximos 30 dias. |
+
+*Fonte: elaborado pelos autores (2026).*
 
 O dashboard também exibe gráficos que sintetizam a distribuição dos ativos por situação e por tipo.
 
@@ -114,11 +118,15 @@ O colaborador é cadastrado com status **ativo** e passa a estar disponível par
 
 A **Curva ABC** classifica os ativos conforme sua relevância financeira no inventário:
 
+**Quadro 2 — Classificação da Curva ABC**
+
 | Classe | Critério | Interpretação |
 |--------|----------|---------------|
 | **A** | Itens que representam até 80% do valor acumulado | Itens de maior valor; merecem maior controle. |
 | **B** | Itens entre 80% e 95% do valor acumulado | Itens de valor intermediário. |
 | **C** | Itens que representam os 5% finais | Itens de menor valor relativo. |
+
+*Fonte: elaborado pelos autores (2026).*
 
 Essa análise auxilia na priorização da gestão dos ativos de maior impacto financeiro.
 
@@ -143,6 +151,8 @@ No topo da interface há um seletor de tema. Ao acioná-lo, a aparência do sist
 
 ## 5.12. Níveis de acesso
 
+**Quadro 3 — Matriz de permissões por nível de acesso**
+
 | Ação | Administrador | Operador |
 |------|:-------------:|:--------:|
 | Acessar dashboard | ✔ | ✔ |
@@ -154,6 +164,8 @@ No topo da interface há um seletor de tema. Ao acioná-lo, a aparência do sist
 | Vincular/desvincular e manutenção | ✔ | ✗ |
 | Gerenciar usuários do sistema | ✔ | ✗ |
 | Gerenciar opções do SmartSelect | ✔ | ✗ |
+
+*Fonte: elaborado pelos autores (2026).*
 
 > O operador possui acesso somente de leitura às informações cadastrais; não pode realizar alterações.
 
@@ -178,3 +190,11 @@ O sistema emite alertas automáticos quando a quantidade de um tipo de ativo fic
 
 **6. O tema escuro fica salvo após eu sair do sistema?**
 Sim. A preferência de tema é armazenada no navegador e mantida nos próximos acessos a partir do mesmo dispositivo.
+
+---
+
+## 5.14. Referências
+
+ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. **NBR 14724**: informação e documentação: trabalhos acadêmicos: apresentação. Rio de Janeiro: ABNT, 2011.
+
+DIAS, Marco Aurélio P. **Administração de materiais**: uma abordagem logística. 6. ed. São Paulo: Atlas, 2019.

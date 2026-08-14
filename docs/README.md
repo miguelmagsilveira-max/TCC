@@ -20,6 +20,14 @@ O **Stock Flow** é um sistema web para gestão de ativos de Tecnologia da Infor
 | 5 | [Manual do Usuário](5-manual-do-usuario.md) | Guia de utilização do sistema passo a passo |
 | 6 | [Testes](6-testes.md) | Plano de testes, casos de teste e resultados |
 
+> Todos os documentos técnicos seguem o padrão **ABNT** (numeração progressiva NBR 6024, legendas de figuras e quadros, fontes e referências NBR 6023).
+
+## Guias de estudo para a apresentação
+
+Material de apoio para o grupo apresentar o TCC, com um guia individual por integrante:
+
+- [Guias de estudo](guias-de-estudo/README.md) — contexto do projeto, divisão das 7 partes, roteiros de fala e perguntas da banca.
+
 ## Informações do projeto
 
 | Campo | Valor |

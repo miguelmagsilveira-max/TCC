@@ -8,14 +8,20 @@ Este documento apresenta os atores do sistema e os casos de uso que descrevem as
 
 ## 4.1. Atores
 
+**Quadro 1 — Atores do sistema**
+
 | Ator | Descrição |
 |------|-----------|
 | **Administrador** | Usuário com acesso total ao sistema. Pode cadastrar, editar e desativar ativos e colaboradores, gerenciar usuários e configurar parâmetros. |
 | **Operador** | Usuário com acesso restrito. Pode visualizar ativos, colaboradores, dashboard e relatórios, mas não realiza alterações cadastrais. |
 
+*Fonte: elaborado pelos autores (2026).*
+
 ---
 
 ## 4.2. Diagrama de casos de uso
+
+**Figura 1 — Diagrama de casos de uso do sistema Stock Flow**
 
 ```mermaid
 graph LR
@@ -66,6 +72,8 @@ graph LR
     Admin --> UC16
     Admin --> UC17
 ```
+
+*Fonte: elaborado pelos autores (2026).*
 
 ---
 
@@ -235,3 +243,13 @@ graph LR
   2. O sistema alterna entre o modo claro e o escuro e salva a preferência no navegador.
 - **Fluxo alternativo:** —
 - **Pós-condição:** O tema selecionado é aplicado e persistido localmente.
+
+---
+
+## 4.4. Referências
+
+ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. **NBR 14724**: informação e documentação: trabalhos acadêmicos: apresentação. Rio de Janeiro: ABNT, 2011.
+
+BOOCH, Grady; RUMBAUGH, James; JACOBSON, Ivar. **UML**: guia do usuário. 2. ed. Rio de Janeiro: Elsevier, 2006.
+
+PRESSMAN, Roger S.; MAXIM, Bruce R. **Engenharia de software**: uma abordagem profissional. 8. ed. Porto Alegre: AMGH, 2016.

@@ -81,6 +81,16 @@ CREATE TABLE IF NOT EXISTS notificacoes (
   criada_em DATETIME NOT NULL DEFAULT NOW()
 );
 
+-- Opções dinâmicas dos campos de seleção (componente SmartSelect)
+CREATE TABLE IF NOT EXISTS opcoes_select (
+  id         INT AUTO_INCREMENT PRIMARY KEY,
+  contexto   VARCHAR(100) NOT NULL,
+  valor      VARCHAR(100) NOT NULL,
+  criado_por INT,
+  criado_em  DATETIME NOT NULL DEFAULT NOW(),
+  UNIQUE KEY uk_contexto_valor (contexto, valor)
+);
+
 -- ──────────────────────────────────────────────
 -- DADOS INICIAIS
 -- ──────────────────────────────────────────────
@@ -149,3 +159,32 @@ INSERT INTO historico_ativos (id_ativo, acao, id_colaborador_novo, detalhes, rea
 -- Notificação de exemplo
 INSERT INTO notificacoes (tipo, titulo, mensagem) VALUES
   ('estoque_baixo', 'Estoque baixo: Notebook', 'O estoque de Notebooks está abaixo do mínimo configurado (mínimo: 2, atual: 1).');
+
+-- Opções iniciais dos campos de seleção (SmartSelect)
+INSERT INTO opcoes_select (contexto, valor) VALUES
+  ('tipo_ativo', 'Notebook'),
+  ('tipo_ativo', 'Monitor'),
+  ('tipo_ativo', 'Teclado'),
+  ('tipo_ativo', 'Mouse'),
+  ('tipo_ativo', 'Headset'),
+  ('tipo_ativo', 'Webcam'),
+  ('tipo_ativo', 'Nobreak'),
+  ('tipo_ativo', 'Switch'),
+  ('tipo_ativo', 'Impressora'),
+  ('tipo_ativo', 'Cabo HDMI'),
+  ('tipo_aquisicao', 'Compra'),
+  ('tipo_aquisicao', 'Comodato'),
+  ('tipo_aquisicao', 'Locação'),
+  ('tipo_aquisicao', 'Doação'),
+  ('localizacao', 'Matriz'),
+  ('localizacao', 'Filial'),
+  ('localizacao', 'Home Office'),
+  ('localizacao', 'Almoxarifado'),
+  ('cargo', 'Desenvolvedor Backend'),
+  ('cargo', 'Analista de Sistemas'),
+  ('cargo', 'Designer UX'),
+  ('cargo', 'Gerente de TI'),
+  ('departamento', 'TI'),
+  ('departamento', 'Marketing'),
+  ('departamento', 'RH'),
+  ('departamento', 'Financeiro');

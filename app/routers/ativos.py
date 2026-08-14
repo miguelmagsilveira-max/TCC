@@ -201,8 +201,13 @@ def vincular(
     colaborador_id: int = Form(...),
     admin: dict = Depends(requer_admin),
 ):
-    ativo = execute_one("SELECT id_colaborador FROM ativos WHERE id = %s", (ativo_id,))
-    id_anterior = ativo["id_colaborador"] if ativo else None
+    ativo = execute_one("SELECT id_colaborador, situacao FROM ativos WHERE id = %s", (ativo_id,))
+    if not ativo:
+        return RedirectResponse(url="/ativos", status_code=302)
+    # RN04: um ativo em manutenção (ou desativado) não pode ser vinculado.
+    if ativo["situacao"] in ("Manutenção", "Desativado"):
+        return RedirectResponse(url=f"/ativos/{ativo_id}", status_code=302)
+    id_anterior = ativo["id_colaborador"]
 
     execute_write(
         "UPDATE ativos SET situacao='Em uso', id_colaborador=%s, data_vinculacao=NOW() WHERE id=%s",

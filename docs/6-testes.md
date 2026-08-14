@@ -192,6 +192,8 @@ O objetivo dos testes é verificar se o sistema atende aos requisitos funcionais
 
 ## 6.3. Tabela resumo dos testes
 
+**Quadro 1 — Resumo dos casos de teste executados**
+
 | ID | Funcionalidade | Resultado |
 |----|----------------|-----------|
 | CT01 | Login válido | Aprovado |
@@ -219,6 +221,8 @@ O objetivo dos testes é verificar se o sistema atende aos requisitos funcionais
 | CT23 | Expiração de sessão | Aprovado |
 | CT24 | Erro 404 | Aprovado |
 
+*Fonte: elaborado pelos autores (2026).*
+
 **Total:** 24 casos de teste — 24 aprovados (100%).
 
 ---
@@ -226,3 +230,13 @@ O objetivo dos testes é verificar se o sistema atende aos requisitos funcionais
 ## 6.4. Conclusão dos testes
 
 Os 24 casos de teste executados cobrem as principais funcionalidades e regras de negócio do sistema Stock Flow, incluindo autenticação, controle de acesso por nível de usuário, gestão completa do ciclo de vida dos ativos, alertas, relatórios e recursos de interface. Todos os casos foram **aprovados**, demonstrando que o sistema atende aos requisitos especificados e está apto para utilização. Recomenda-se a continuidade dos testes a cada nova funcionalidade incorporada, mantendo a cobertura e a confiabilidade do sistema.
+
+---
+
+## 6.5. Referências
+
+ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. **NBR 14724**: informação e documentação: trabalhos acadêmicos: apresentação. Rio de Janeiro: ABNT, 2011.
+
+DELAMARO, Márcio E.; MALDONADO, José C.; JINO, Mario. **Introdução ao teste de software**. 2. ed. Rio de Janeiro: Elsevier, 2016.
+
+PRESSMAN, Roger S.; MAXIM, Bruce R. **Engenharia de software**: uma abordagem profissional. 8. ed. Porto Alegre: AMGH, 2016.

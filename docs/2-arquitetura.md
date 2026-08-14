@@ -10,6 +10,8 @@ Este documento descreve a arquitetura de software adotada no sistema Stock Flow,
 
 O Stock Flow é uma aplicação web monolítica baseada em renderização server-side. O servidor de aplicação, construído com o framework FastAPI, recebe as requisições HTTP, processa a lógica de negócio, consulta o banco de dados MySQL e devolve páginas HTML renderizadas por meio de templates Jinja2.
 
+**Figura 1 — Visão geral da arquitetura em camadas**
+
 ```
 ┌──────────────────────────────────────────────────────────────┐
 │                         NAVEGADOR                              │
@@ -35,6 +37,8 @@ O Stock Flow é uma aplicação web monolítica baseada em renderização server
 │                       (MySQL 8.0)                              │
 └──────────────────────────────────────────────────────────────┘
 ```
+
+*Fonte: elaborado pelos autores (2026).*
 
 ---
 
@@ -62,6 +66,8 @@ Responsável pela interface com o usuário. É composta por:
 
 Implementada pelos *routers* do FastAPI, concentra a lógica de negócio do sistema:
 
+**Quadro 1 — Responsabilidades dos routers**
+
 | Router | Responsabilidade |
 |--------|------------------|
 | `auth_routes.py` | Login, logout e emissão de token JWT |
@@ -71,6 +77,8 @@ Implementada pelos *routers* do FastAPI, concentra a lógica de negócio do sist
 | `alertas.py` | Alertas de estoque baixo e garantias vencendo |
 | `relatorios.py` | Geração de relatórios e exportação em PDF |
 | `admin.py` | Gerenciamento de usuários do sistema |
+
+*Fonte: elaborado pelos autores (2026).*
 
 O módulo `auth.py` provê funções de autenticação e autorização (verificação de token, hash de senha e controle de nível de acesso).
 
@@ -89,6 +97,8 @@ As credenciais de conexão são carregadas a partir de variáveis de ambiente (`
 ## 2.4. Fluxo de uma requisição
 
 A sequência a seguir descreve o percurso de uma requisição típica, do navegador ao banco de dados e de volta:
+
+**Figura 2 — Fluxo de uma requisição HTTP**
 
 ```mermaid
 sequenceDiagram
@@ -109,6 +119,8 @@ sequenceDiagram
     R-->>U: HTML renderizado
 ```
 
+*Fonte: elaborado pelos autores (2026).*
+
 1. O navegador envia uma requisição HTTP a uma rota do sistema.
 2. O router correspondente valida o cookie JWT por meio do módulo de autenticação.
 3. Confirmada a autenticação e o nível de acesso, o router solicita os dados à camada de dados.
@@ -119,6 +131,8 @@ sequenceDiagram
 ---
 
 ## 2.5. Estrutura de diretórios
+
+**Figura 3 — Estrutura de diretórios do projeto**
 
 ```
 TCC/
@@ -157,9 +171,13 @@ TCC/
 └── docs/                       # Documentação técnica
 ```
 
+*Fonte: elaborado pelos autores (2026).*
+
 ---
 
 ## 2.6. Tecnologias e bibliotecas
+
+**Quadro 2 — Tecnologias e bibliotecas utilizadas**
 
 | Tecnologia / Biblioteca | Versão | Justificativa de escolha |
 |-------------------------|--------|--------------------------|
@@ -177,9 +195,13 @@ TCC/
 | Tailwind CSS | (via CDN) | Estilização utilitária e responsiva da interface. |
 | MySQL | 8.0 | Sistema de gerenciamento de banco de dados relacional robusto e confiável. |
 
+*Fonte: elaborado pelos autores (2026).*
+
 ---
 
 ## 2.7. Diagrama de componentes
+
+**Figura 4 — Diagrama de componentes**
 
 ```mermaid
 graph TD
@@ -229,3 +251,21 @@ graph TD
     TPL -->|HTML| NAV
     DB -->|SQL| MYSQL
 ```
+
+*Fonte: elaborado pelos autores (2026).*
+
+---
+
+## 2.8. Referências
+
+ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. **NBR 14724**: informação e documentação: trabalhos acadêmicos: apresentação. Rio de Janeiro: ABNT, 2011.
+
+FASTAPI. **FastAPI documentation**. [S. l.], 2024. Disponível em: https://fastapi.tiangolo.com. Acesso em: 14 ago. 2026.
+
+FOWLER, Martin. **Patterns of enterprise application architecture**. Boston: Addison-Wesley, 2002.
+
+ORACLE. **MySQL 8.0 reference manual**. [S. l.], 2024. Disponível em: https://dev.mysql.com/doc/refman/8.0/en/. Acesso em: 14 ago. 2026.
+
+PALLETS PROJECTS. **Jinja documentation**. [S. l.], 2024. Disponível em: https://jinja.palletsprojects.com. Acesso em: 14 ago. 2026.
+
+TAILWIND LABS. **Tailwind CSS documentation**. [S. l.], 2024. Disponível em: https://tailwindcss.com/docs. Acesso em: 14 ago. 2026.
