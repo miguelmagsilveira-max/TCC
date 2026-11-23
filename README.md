@@ -54,6 +54,38 @@ uvicorn app.main:app --reload
 | Administrador | admin@stockflow.com | admin123 | Admin |
 | Operador | operador@stockflow.com | operador123 | Operador |
 
+## Execução com Docker
+
+Alternativa à execução local: sobe a aplicação e o banco MySQL em containers, sem precisar instalar Python ou MySQL na máquina.
+
+### 1. Configurar variáveis de ambiente
+```bash
+cp .env.example .env
+```
+O `docker-compose.yml` lê todos os valores do `.env` (senhas, `JWT_SECRET`, `MYSQL_ROOT_PASSWORD`). Nenhum segredo fica fixo no compose.
+
+### 2. Subir a stack
+```bash
+docker compose up -d --build
+```
+Na primeira subida, o MySQL carrega automaticamente o banco a partir de `docker/mysql-init/dump.sql` (schema + dados).
+
+### 3. Acessar
+- Sistema: http://localhost:8000
+- MySQL (host): porta `3307` (mapeada para o `3306` do container, evita conflito com um MySQL local)
+
+### Comandos úteis
+```bash
+docker compose down        # para os containers (mantém os dados)
+docker compose down -v     # para e apaga o volume (recarrega o dump do zero na próxima subida)
+docker compose logs -f app # acompanha os logs da aplicação
+```
+
+> O arquivo `docker/mysql-init/` é executado apenas quando o volume de dados está vazio. Para regenerar o dump a partir de um banco existente:
+> ```bash
+> mysqldump -u siga -p --no-tablespaces --databases stockflow > docker/mysql-init/dump.sql
+> ```
+
 ## Deploy (Railway)
 
 O projeto inclui `railway.json` e `Procfile` para deploy no Railway.
@@ -68,6 +100,9 @@ Configure as variáveis de ambiente `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, 
 - `app/templates/` — páginas HTML (Jinja2)
 - `app/static/` — arquivos estáticos (CSS, JS)
 - `init_db.sql` — schema do banco + dados iniciais
+- `Dockerfile` — imagem da aplicação (Python + uvicorn)
+- `docker-compose.yml` — orquestração app + MySQL
+- `docker/mysql-init/dump.sql` — dump carregado automaticamente pelo container MySQL
 - `docs/` — documentação técnica do projeto (ver [docs/README.md](docs/README.md))
 
 ## Documentação
